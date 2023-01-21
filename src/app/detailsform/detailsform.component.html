@@ -1,0 +1,215 @@
+<nav class="navbar navbar-light bg-primary">
+    <div class="container-fluid">
+        <h1 style="color: aliceblue;">Application Forms</h1>
+        <div class="d-flex">
+            <button type="button" class="btn btn-warning" (click)="loginPage()"  style="margin-right: 20px;">Logout User</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                class="btn btn-success">Add Material</button>
+        </div>
+    </div>
+</nav>
+
+<!-- <table class="table mt-3">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Date</th>
+            <th scope="col">Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of salesData">
+            <td>{{row.id-1}}</td>
+            <td>{{row.date}}</td>
+            <td>{{row.name}}</td>
+            <td>{{row.quantity}}</td>
+            <td>{{row.price}}</td>
+            <td>
+                <button class="btn btn-info" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="onEdit(row)">Edit</button>
+                <button class="btn btn-danger mx-3" (click)="deleteSales(row)" >Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table> -->
+<!-- <div *ngIf="cardShow"></div> -->
+<nav class="navbar bg-light">
+    <form class="container-fluid justify-content-start">
+        <button class="btn btn-outline-success me-2" type="button" (click)="generalInformation()">General Information</button>
+        <button class="btn btn-outline-primary me-2" type="button" (click)="experience()">Experience</button>
+        <button class="btn btn-outline-primary me-2" type="button" (click)="skills()">Skills</button>
+        <button class="btn btn-outline-primary me-2" type="button" (click)="project()">Add Project</button>
+        <button class="btn btn-outline-primary me-2" type="button" (click)="course()">Add Course</button>
+        <button class="btn btn-outline-primary me-2" type="button" (click)="contact()">Contact Info</button>
+    </form>
+</nav>
+<!-- General Information -->
+<div *ngIf="generalinformations">
+    <div class="card" style="width: 18rem; display: inline-block; margin: 10px; background-color: #0275d8;color: whitesmoke " *ngFor="let row of allApplication[0]">
+        <div class="card-body">
+            <h2 class="card-title">{{row.fullnames}}</h2>
+            <h5 class="card-subtitle mb-2 text-muted">{{row.headline}}</h5>
+        </div>
+    </div>
+</div>
+<!-- Experience -->
+<div *ngIf="exp">
+    <div class="card" style="width: 18rem; display: inline-block; margin: 10px; background-color: #0275d8;color: whitesmoke ;" *ngFor="let row of allApplication[0]">
+        <div class="card-body">
+            <h2 class="card-title">{{row.companyname}}</h2>
+            <h5 class="card-subtitle mb-2 text-muted">{{row.position}}</h5>
+            <h6 class="card-text">{{row.dateofjoining}}</h6>
+            <h6 class="card-text">{{row.workdescription}}</h6>
+            <h6 class="card-text">{{row.usedskills}}</h6>
+        </div>
+    </div>
+</div>
+<!-- Skills -->
+<div *ngIf="skill">
+    <div class="card" style="width: 18rem; display: inline-block; margin: 10px;background-color: #0275d8 ;color: whitesmoke;" *ngFor="let row of allApplication[0]">
+        <div class="card-body">
+            <h2 class="card-title">{{row.skillsname}}</h2>
+            <h5 class="card-subtitle mb-2 text-muted">{{row.yoe}}</h5>
+        </div>
+    </div>
+</div>
+<!-- Add Project -->
+<div *ngIf="projects">
+    <div class="card" style="width: 18rem; display: inline-block; margin: 10px;background-color: #0275d8 ;color: whitesmoke;" *ngFor="let row of allApplication[0]">
+        <div class="card-body">
+            <h2 class="card-title">{{row.projecttitle}}</h2>
+            <h5 class="card-subtitle mb-2 text-muted">{{row.projecturl}}</h5>
+            <h6 class="card-text">{{row.projectdescription}}</h6>
+            <h6 class="card-text">{{row.projectdurations}}</h6>
+        </div>
+    </div>
+</div>
+<!-- Add Course -->
+<div *ngIf="courses">
+    <div class="card" style="width: 18rem; display: inline-block; margin: 10px;background-color: #0275d8 ;color: whitesmoke" *ngFor="let row of allApplication[0]">
+        <div class="card-body">
+            <h2 class="card-title">{{row.name}}</h2>
+            <h5 class="card-subtitle mb-2 text-muted">{{row.issuingorganisation}}</h5>
+        </div>
+    </div>
+</div>
+<!-- Contact Info -->
+<div *ngIf="contacts">
+    <div class="card" style="width: 18rem; display: inline-block; margin: 10px;background-color: #0275d8 ;color: whitesmoke; color: whitesmoke;" *ngFor="let row of allApplication[0]">
+        <div class="card-body">
+            <h2 class="card-title">{{row.email}}</h2>
+            <h5 class="card-subtitle mb-2 text-muted">{{row.phone}}</h5>
+            <h6 class="card-text">{{row.skypeid}}</h6>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Employee Application form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="applicationForm">
+                    <!-- <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Date</label>
+                  <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div> -->
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" formControlName="fullname" placeholder="Enter Full Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Headline</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" formControlName="headline" placeholder="Enter Headline">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Company Name</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1"
+                            formControlName="companyname" placeholder="company name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Position</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" formControlName="position" placeholder="position">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Date of joining</label>
+                        <input type="date" class="form-control" id="exampleInputPassword1"
+                            formControlName="dateofjoining">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Work Description</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="work description"
+                            formControlName="workdescription">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Used Skills</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" formControlName="usedskills" placeholder="Used Skills">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Skills Name</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" formArrayName="skillsname" placeholder="Skills Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Year of experience</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" formControlName=yoe placeholder="Year of Experience">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Project title</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Project Titl"
+                            formControlName="projecttitle">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Project URL</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" formControlName="projecturl" placeholder="Project URL">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Project description</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Project description"
+                            formControlName="proejctdescritpion">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Project Durations</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="project durations"
+                            formControlName="proejctdurations">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" formControlName="name" placeholder="course name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Issuing organisation</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1"
+                            formControlName="issuingorganisation" placeholder="organisation name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Certificate link</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1"
+                            formControlName="certificate" placeholder="certifications link">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="exampleInputPassword1" formControlName="email" placeholder="Enter Email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Phone</label>
+                        <input type="number" class="form-control" id="exampleInputPassword1" formControlName="phone" placeholder="Enter Phone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">SkypeID</label>
+                        <input type="text" class="form-control" id="exampleInputPassword1" formControlName="skypeid" placeholder="Enter SkypeID">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="submitApplicationform()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
